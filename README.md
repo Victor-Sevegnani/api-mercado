@@ -15,7 +15,8 @@ Relacionamento entre produtos e categorias
 
 Middleware de autenticação
 
-🚀 Tecnologias utilizadas
+🚀 Tecnologias utilizadas:
+
 PHP (v8.1+)
 
 Laravel (v10+)
