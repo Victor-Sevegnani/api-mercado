@@ -1,6 +1,6 @@
 API RESTful desenvolvida em Laravel para gerenciamento de produtos, categorias e usuários de um mercado.
 
-📂 Sobre o projeto
+📂 Sobre o projeto:
 Este projeto tem como objetivo criar uma API completa para gestão de um sistema de mercado, com funcionalidades como:
 
 Cadastro de usuários
