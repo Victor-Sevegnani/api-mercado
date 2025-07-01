@@ -13,16 +13,15 @@ use Illuminate\Support\Facades\Auth;
 class UserController extends Controller
 {
 
-    public function index()
+    public function index() //Otimizado
     {
-        $users = User::with('orders')->get();
-        return response()->json($users);
+        return response()->json(Auth::user());
     }
 
     public function update(Request $request)
     {
         $userId = Auth::id();
-        $credentials = $request->all();
+        $credentials = $request->only(['name', 'email', 'password', 'money']);
 
         if (!User::query()->where('id', $userId)->update($credentials)) {
             response()->json('Falha ao atualizar o seu perfil');

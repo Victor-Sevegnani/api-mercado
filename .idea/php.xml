@@ -129,6 +129,7 @@
       <path value="$PROJECT_DIR$/Documentacao/vendor/tijsverkoyen/css-to-inline-styles" />
       <path value="$PROJECT_DIR$/Documentacao/vendor/nunomaduro/termwind" />
       <path value="$PROJECT_DIR$/Documentacao/vendor/nunomaduro/collision" />
+      <path value="$PROJECT_DIR$/Documentacao/vendor/laravel/telescope" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.2" />

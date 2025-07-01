@@ -14,13 +14,14 @@ class LoginController extends Controller
         return $response::json('Bem vindo ao sistema');
     }
 
-    public function store(Request $request, \Illuminate\Support\Facades\Response $response)
+    public function store(Request $request, \Illuminate\Support\Facades\Response $response) // Melhorado
     {
-        $credentials = $request->all();
-        if (!User::create($credentials)) {
-            return $response::json('Erro ao criar usuário', 400);
-        };
-        return $response::json('Usuário criado com sucesso', 201);
+        $credentials = $request->only(['name', 'email', 'password', 'money']);
+        if (!User::query()->where('email', $credentials['email'])->exists()) {
+            User::query()->create($credentials);
+            return $response::json('Usuário criado com sucesso', 201);
+        }
+        return $response::json('Usuário já existente', 400);
     }
 
     public function login(Request $request, \Illuminate\Support\Facades\Response $response)

@@ -3,21 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Models\OrdersModel;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
 
 class OrdersController extends Controller
 {
-    public function index(Response $response)
+    public function index(): JsonResponse
     {
-        if (OrdersModel::all()->count() == 0) {
-            return $response::json('Nenhum produto encontrado');
-        }
-        return $response::json(OrdersModel::all());
+        $orders = OrdersModel::all();
+        return $orders->count() != 0
+            ? \response()->json($orders)
+            : \response()->json('Nenhum produto encontrado');
     }
 
-    public function store(Request $request, Response $response)
+    public function store(Request $request)
     {
         $items = $request->only(['product', 'type', 'price', 'quantity']);
         $userId = Auth::id();
@@ -28,14 +29,14 @@ class OrdersController extends Controller
         if (!$exists) {
             $items['user_id'] = $userId;
         } else {
-            return $response::json('Itens já existentes');
+            return \response()->json('Itens já existentes');
         }
 
         if (!OrdersModel::create($items)) {
-            return $response::json('Falha ao criar produto', 400);
+            return  \response()->json('Falha ao criar produto', 400);
         }
 
-        return $response::json('Itens criados com sucesso', 201);
+        return  \response()->json('Itens criados com sucesso', 201);
     }
 
     public function update(Request $request)
