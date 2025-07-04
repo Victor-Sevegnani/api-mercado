@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\OrdersModel;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 
 class PurchaseController extends Controller
 {
-    public function purchase(Request $request)
+    public function purchase(Request $request): JsonResponse
     {
         $product = $request->input('product');
         $query = OrdersModel::query()->where('product', $product)->first();

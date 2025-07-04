@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\OrdersModel;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Response;
 
 class OrdersController extends Controller
 {
@@ -18,28 +16,18 @@ class OrdersController extends Controller
             : \response()->json('Nenhum produto encontrado');
     }
 
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
         $items = $request->only(['product', 'type', 'price', 'quantity']);
-        $userId = Auth::id();
 
-        $exists = OrdersModel::query()->where('product', $items['product'])
-            ->exists();
-
-        if (!$exists) {
-            $items['user_id'] = $userId;
-        } else {
-            return \response()->json('Itens já existentes');
+        if (OrdersModel::query()->where('product', $items['product'])->exists()) {
+            return \response()->json(['message' => 'Itens já registrados'], 400);
         }
 
-        if (!OrdersModel::create($items)) {
-            return  \response()->json('Falha ao criar produto', 400);
-        }
-
-        return  \response()->json('Itens criados com sucesso', 201);
+        return \response()->json(['message' => 'Itens criados com sucesso'], 201);
     }
 
-    public function update(Request $request)
+    public function update(Request $request): JsonResponse
     {
         $items = $request->only(['product', 'type', 'price', 'quantity']);
         $query = OrdersModel::query();
@@ -51,7 +39,7 @@ class OrdersController extends Controller
         return \response()->json('Sucesso ao atualizar o produto');
     }
 
-    public function destroy($id)
+    public function destroy($id): JsonResponse
     {
         if (!OrdersModel::destroy($id)) {
             return \response()->json('Falha ao apagar o produto');
@@ -59,7 +47,7 @@ class OrdersController extends Controller
         return \response()->json('Sucesso ao apagar o produto');
     }
 
-    public function find(int $id)
+    public function find(int $id): JsonResponse
     {
         return \response()->json(OrdersModel::find($id));
     }

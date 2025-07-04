@@ -2,11 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\OrdersModel;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
